@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://arangodb.com/schemas/dataloader/loader_mapping.schema.json",
+  "title": "Data Loader Mapping",
+  "description": "Specification of a data mapping from external data formats and sources to ArangoDB",
+  "type": "object",
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_name": {
+            "type": "string",
+            "description": "Name of data source for use in mappings"
+          },
+          "source_file": {
+            "type": "string"
+          },
+          "value_mapping": {
+            "type": "object"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "csv",
+              "parquet",
+              "json",
+              "jsonl"
+            ]
+          }
+        },
+        "required": [
+          "source_name",
+          "source_file",
+          "source_type"
+        ]
+      },
+      "minItems": 1
+    },
+    "graphDefinition": {
+      "type": "object",
+      "properties": {
+        "graph": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "vertexCollections": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "relations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "fromVertexCollections": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "toVertexCollections": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "collections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "createCollection": { "type": "boolean" },
+              "createCollectionType": {
+                "type": "string",
+                "enum": ["document", "edge"]
+              }
+            },
+            "required": ["name"]
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["collections"]
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "sources",
+    "graphDefinition",
+    "mappings"
+  ]
+}
