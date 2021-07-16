@@ -14,8 +14,10 @@
             "type": "string",
             "description": "Name of data source for use in mappings"
           },
-          "sourceFile": {
-            "type": "string"
+          "sourceURIs": {
+            "type": "array",
+            "description": "A list of source URIs to be read from (e.g. local file locations)",
+            "items": { "type": "string" }
           },
           "sourceType": {
             "type": "string",
