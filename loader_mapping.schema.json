@@ -10,17 +10,14 @@
       "items": {
         "type": "object",
         "properties": {
-          "source_name": {
+          "sourceName": {
             "type": "string",
             "description": "Name of data source for use in mappings"
           },
-          "source_file": {
+          "sourceFile": {
             "type": "string"
           },
-          "value_mapping": {
-            "type": "object"
-          },
-          "source_type": {
+          "sourceType": {
             "type": "string",
             "enum": [
               "csv",
@@ -31,9 +28,9 @@
           }
         },
         "required": [
-          "source_name",
-          "source_file",
-          "source_type"
+          "sourceName",
+          "sourceFile",
+          "sourceType"
         ]
       },
       "minItems": 1
@@ -90,7 +87,17 @@
     "mappings": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "collectionName": {"type": "string"},
+          "sourceName": {"type": "string"},
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/fieldDefinition"
+            }
+          }
+        }
       },
       "minItems": 1
     }
@@ -99,5 +106,34 @@
     "sources",
     "graphDefinition",
     "mappings"
-  ]
+  ],
+  "definitions": {
+    "fieldDefinition": {
+      "type": "object",
+      "properties": {
+        "sourceField": {"type": "string"},
+        "collectionField": {"type": "string"},
+        "fieldType": {
+          "type": "string",
+          "enum": ["array", "object", "value"]
+        },
+        "field": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": ["boolean", "number", "string"]
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fieldDefinition"
+              }
+            },
+          ]
+        },
+        "isNullable": {"type": "boolean"}
+      },
+      "required": ["sourceField", "collectionField", "field"]
+    }
+  }
 }
