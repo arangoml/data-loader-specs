@@ -27,12 +27,17 @@
               "json",
               "jsonl"
             ]
+          },
+          "sourceTypeOptions": {
+            "type": "object",
+            "description": "Source Type Specific Properties (e.g. whether or not a CSV has a header, column names, etc.)"
           }
         },
         "required": [
           "sourceName",
           "sourceFile",
-          "sourceType"
+          "sourceType",
+          "sourceTypeOptions"
         ]
       },
       "minItems": 1
@@ -130,7 +135,7 @@
               "items": {
                 "$ref": "#/definitions/fieldDefinition"
               }
-            },
+            }
           ]
         },
         "isNullable": {"type": "boolean"}
