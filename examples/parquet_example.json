@@ -1,0 +1,107 @@
+{
+  "$schema": "https://arangodb.com/schemas/dataloader/loader_mapping.schema.json",
+  "sources": [
+    {
+      "sourceName": "trafficData",
+      "sourceURIS": ["<path_to_my_files>/*.parquet"],
+      "sourceType": "parquet",
+      "fieldSchema": [
+        {
+          "name": "id",
+          "fieldId": "id",
+          "type": "value",
+          "struct": "string"
+        },
+        {
+          "name": "trip_distance",
+          "fieldId": "trip_distance",
+          "type": "value",
+          "struct": "number"
+        },
+        {
+          "name": "total_amount",
+          "fieldId": "total_amount",
+          "type": "value",
+          "struct": "number"
+        }
+      ]
+    }
+  ],
+  "graphDefinition": {
+    "collections": [
+      {
+        "name": "traffic",
+        "createCollection": true,
+        "createCollectionType": "document",
+        "fieldSchema": [
+          {
+            "name": "_key",
+            "fieldId": "_key",
+            "type": "value",
+            "struct": "string"
+          },
+          {
+            "name": "trip_distance",
+            "fieldId": "trip_distance",
+            "type": "value",
+            "struct": "number"
+          },
+          {
+            "name": "total_amount",
+            "fieldId": "total_amount",
+            "type": "value",
+            "struct": "number"
+          }
+        ]
+      }
+    ]
+  },
+  "mappingSchema": [
+    {
+      "inputs": [
+        {
+          "sourceName": "trafficData",
+          "sourceFieldIdentifier": "id"
+        }
+      ],
+      "outputs": [
+        {
+          "collectionName": "traffic",
+          "targetFieldIdentifier": "_key"
+        }
+      ],
+      "function": "passThrough",
+      "isPrimary": true
+    },
+    {
+      "inputs": [
+        {
+          "sourceName": "trafficData",
+          "sourceFieldIdentifier": "trip_distance"
+        }
+      ],
+      "outputs": [
+        {
+          "collectionName": "traffic",
+          "targetFieldIdentifier": "trip_distance"
+        }
+      ],
+      "function": "passThrough"
+    },
+    {
+      "inputs": [
+        {
+          "sourceName": "trafficData",
+          "sourceFieldIdentifier": "total_amount"
+        }
+      ],
+      "outputs": [
+        {
+          "collectionName": "traffic",
+          "targetFieldIdentifier": "total_amount"
+        }
+      ],
+      "function": "passThrough"
+    }
+  ]
+}

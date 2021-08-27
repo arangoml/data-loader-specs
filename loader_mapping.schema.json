@@ -14,7 +14,7 @@
             "type": "string",
             "description": "Name of data source for use in mappings"
           },
-          "sourceURIs": {
+          "sourceURIS": {
             "type": "array",
             "description": "A list of source URIs to be read from (e.g. local file locations)",
             "items": { "type": "string" }
@@ -31,13 +31,19 @@
           "sourceTypeOptions": {
             "type": "object",
             "description": "Source Type Specific Properties (e.g. whether or not a CSV has a header, column names, etc.)"
+          },
+          "fieldSchema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/fieldDefinition"
+            }
           }
         },
         "required": [
           "sourceName",
-          "sourceFile",
+          "sourceURIS",
           "sourceType",
-          "sourceTypeOptions"
+          "fieldSchema"
         ]
       },
       "minItems": 1
@@ -82,29 +88,54 @@
               "createCollectionType": {
                 "type": "string",
                 "enum": ["document", "edge"]
+              },
+              "fieldSchema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/fieldDefinition"
+                }
               }
             },
-            "required": ["name"]
+            "required": ["name", "fieldSchema"]
           },
           "minItems": 1
         }
       },
       "required": ["collections"]
     },
-    "mappings": {
+    "mappingSchema": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "collectionName": {"type": "string"},
-          "sourceName": {"type": "string"},
-          "fields": {
+          "inputs": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/fieldDefinition"
-            }
-          }
-        }
+              "type": "object",
+              "properties": {
+                "sourceName": {"type": "string"},
+                "sourceFieldIdentifier": {"type": "string"}
+              },
+              "required": ["sourceName", "sourceFieldIdentifier"]
+            },
+            "minItems": 1
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "collectionName": {"type": "string"},
+                "targetFieldIdentifier": {"type": "string"}
+              },
+              "required": ["collectionName", "targetFieldIdentifier"]
+            },
+            "minItems": 1
+          },
+          "function": {"type": "string"},
+          "isPrimary": {"type": "boolean"}
+        },
+        "required": ["inputs", "outputs", "function"]
       },
       "minItems": 1
     }
@@ -112,19 +143,19 @@
   "required": [
     "sources",
     "graphDefinition",
-    "mappings"
+    "mappingSchema"
   ],
   "definitions": {
     "fieldDefinition": {
       "type": "object",
       "properties": {
-        "sourceField": {"type": "string"},
-        "collectionField": {"type": "string"},
-        "fieldType": {
+        "name": {"type": "string"},
+        "fieldId": {"type": "string"},
+        "type": {
           "type": "string",
           "enum": ["array", "object", "value"]
         },
-        "field": {
+        "struct": {
           "oneOf": [
             {
               "type": "string",
@@ -137,10 +168,9 @@
               }
             }
           ]
-        },
-        "isNullable": {"type": "boolean"}
+        }
       },
-      "required": ["sourceField", "collectionField", "field"]
+      "required": ["name", "type", "struct"]
     }
   }
 }
