@@ -64,12 +64,10 @@
           "sourceFieldIdentifier": "id"
         }
       ],
-      "outputs": [
-        {
-          "collectionName": "traffic",
-          "targetFieldIdentifier": "_key"
-        }
-      ],
+      "output": {
+        "collectionName": "traffic",
+        "targetFieldIdentifier": "_key"
+      },
       "function": "passThrough",
       "isPrimary": true
     },
@@ -80,12 +78,10 @@
           "sourceFieldIdentifier": "trip_distance"
         }
       ],
-      "outputs": [
-        {
+      "output": {
           "collectionName": "traffic",
           "targetFieldIdentifier": "trip_distance"
-        }
-      ],
+      },
       "function": "passThrough"
     },
     {
@@ -95,12 +91,10 @@
           "sourceFieldIdentifier": "total_amount"
         }
       ],
-      "outputs": [
-        {
+      "output": {
           "collectionName": "traffic",
           "targetFieldIdentifier": "total_amount"
-        }
-      ],
+      },
       "function": "passThrough"
     }
   ]

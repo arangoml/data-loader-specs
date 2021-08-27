@@ -120,17 +120,13 @@
             },
             "minItems": 1
           },
-          "outputs": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "collectionName": {"type": "string"},
-                "targetFieldIdentifier": {"type": "string"}
-              },
-              "required": ["collectionName", "targetFieldIdentifier"]
+          "output": {
+            "type": "object",
+            "properties": {
+              "collectionName": {"type": "string"},
+              "targetFieldIdentifier": {"type": "string"}
             },
-            "minItems": 1
+            "required": ["collectionName", "targetFieldIdentifier"]
           },
           "function": {"type": "string"},
           "additionalArguments": {
@@ -146,7 +142,7 @@
           },
           "isPrimary": {"type": "boolean"}
         },
-        "required": ["inputs", "outputs", "function"]
+        "required": ["inputs", "output", "function"]
       },
       "minItems": 1
     }
