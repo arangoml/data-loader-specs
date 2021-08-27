@@ -133,6 +133,17 @@
             "minItems": 1
           },
           "function": {"type": "string"},
+          "additionalArguments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "argName": {"type": "string"},
+                "value": {"type": ["number","string","boolean","object","array", "null"]}
+              }
+            },
+            "description": "An optional list of additional arguments"
+          },
           "isPrimary": {"type": "boolean"}
         },
         "required": ["inputs", "outputs", "function"]
