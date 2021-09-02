@@ -5,6 +5,10 @@
   "description": "Specification of a data mapping from external data formats and sources to ArangoDB",
   "type": "object",
   "properties": {
+    "version": {
+      "type":  "string",
+      "description": "The loader mapping schema version that your mapping complies with"
+    },
     "sources": {
       "type": "array",
       "items": {
@@ -148,6 +152,7 @@
     }
   },
   "required": [
+    "version",
     "sources",
     "graphDefinition",
     "mappingSchema"

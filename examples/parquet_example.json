@@ -1,5 +1,6 @@
 {
   "$schema": "https://arangodb.com/schemas/dataloader/loader_mapping.schema.json",
+  "version": "0.0.1",
   "sources": [
     {
       "sourceName": "trafficData",
